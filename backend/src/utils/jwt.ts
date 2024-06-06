@@ -6,8 +6,8 @@ import { UserProps } from "../models/user.types";
 
 const cookieConfig = (date = new Date(1)): CookieOptions => {
   return {
-    domain: process.env.JWT_SECRET === "production" ? "gus.sh" : "localhost",
-    secure: process.env.JWT_SECRET === "production" ? true : false,
+    domain: process.env.NODE_ENV === "production" ? "gus.sh" : "localhost",
+    secure: process.env.NODE_ENV === "production" ? true : false,
     expires: date,
     httpOnly: true,
     sameSite: "strict",
