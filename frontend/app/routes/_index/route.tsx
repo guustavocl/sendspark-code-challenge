@@ -44,9 +44,20 @@ export default function Index() {
         </li>
       </ul>
       <Typography variant="body1" component="div">
-        And you can check the API Swagger UI{" "}
+        You can check the API Swagger UI{" "}
         <Link
           to="https://api.sendspark.gus.sh"
+          target="_blank"
+          rel="noreferrer"
+          className="text-accent hover:brightness-75"
+        >
+          here
+        </Link>
+      </Typography>
+      <Typography variant="body1" component="div">
+        And the trello board{" "}
+        <Link
+          to="https://trello.com/invite/b/ljjqmx4G/ATTIe1e2aa8b4f58fb968be11bbd6d8d7d5620EC83D2/sendspark-code-challenge"
           target="_blank"
           rel="noreferrer"
           className="text-accent hover:brightness-75"

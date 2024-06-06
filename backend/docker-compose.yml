@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  express-image:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3010
+      JWT_SECRET: "sendspark_challenge_secret"
+      MONGO_DB_URL: "mongodb://mongodb:28017/sendspark"
+    network_mode: "host"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '2GB'
+   
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "28017:27017"
+    network_mode: "host"
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+    driver: local
