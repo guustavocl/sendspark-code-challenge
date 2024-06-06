@@ -14,9 +14,9 @@
 @layer base {
   :root {
     --foreground: 0 0% 93%;
-    --background: 231 19% 13%;
-    --primary: 240 6% 8%;
-    --accent: 250 100% 63%;
+    --background: 271 34% 13%;
+    --primary: 271 34% 13%;
+    --accent: 260 65% 53%;
     --accent-foreground: 0 0% 98%;
   }
 }

@@ -35,7 +35,12 @@ const runServer = () => {
   app.use(bodyParser.json({ limit: "10mb" }));
   app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
   app.use(helmet());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: process.env.NODE_ENV === "production" ? "https://sendspark.gus.sh" : "http://localhost:5173",
+      credentials: true,
+    })
+  );
   app.use(cookies());
   app.use(Routes);
   app.use(errorHandler());

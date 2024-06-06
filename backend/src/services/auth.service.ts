@@ -2,7 +2,7 @@ import { User } from "../models/user.model";
 import { UserProps } from "../models/user.types";
 
 export const createUser = async (user: UserProps) => {
-  return await User.create({ user });
+  return await User.create({ ...user });
 };
 
 export const loginUser = async (email: string, password: string) => {
