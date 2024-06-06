@@ -10,9 +10,9 @@ export const removeUser = async (req: Request, res: Response, next: NextFunction
     const { params } = await validate(RemoveUserValidation, req);
     const success = await removeOneUser(params.userId);
     if (success) {
-      res.status(httpStatus.OK).send({ message: "User succesfully removed" });
+      return res.status(httpStatus.OK).send({ message: "User succesfully removed" });
     }
-    res.status(httpStatus.NOT_FOUND).send({ message: "User not found!" });
+    return res.status(httpStatus.NOT_FOUND).send({ message: "User not found!" });
   } catch (err) {
     console.log(err);
     next(err);
@@ -25,7 +25,7 @@ export const findAllUsers = async (req: Request, res: Response, next: NextFuncti
     const filter = pick(query, ["jobTitle", "companyName"]);
     const options = pick(query, ["limit", "page"]);
     const users = await getAllUsers(filter, options);
-    res.status(httpStatus.OK).send({ users: users });
+    return res.status(httpStatus.OK).send({ users: users });
   } catch (err) {
     console.log(err);
     next(err);

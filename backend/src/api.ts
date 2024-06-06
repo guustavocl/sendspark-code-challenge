@@ -15,6 +15,7 @@ const server = http.createServer(app);
 
 const database_url = process.env.MONGO_DB_URL || "";
 const port = process.env.PORT || 3000;
+export const JWT_SECRET = process.env.JWT_SECRET || "sendspark_challenge_secret";
 
 mongoose
   .connect(database_url, {
