@@ -8,6 +8,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import { Routes } from "./routes";
 import dotenv from "dotenv";
+import { errorHandler } from "./middlewares/errors.middleware";
 dotenv.config();
 
 const app = express();
@@ -37,6 +38,7 @@ const runServer = () => {
   app.use(cors());
   app.use(cookies());
   app.use(Routes);
+  app.use(errorHandler());
   server.listen(port, async () => {
     console.log(`Server running on port ${port}`);
   });
