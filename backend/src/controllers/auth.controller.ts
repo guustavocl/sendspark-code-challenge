@@ -1,11 +1,12 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { validate } from "../utils/validate";
 import { SignUpValidation } from "../validations/auth.validations";
 import { createUser, loginUser } from "../services/auth.service";
 import httpStatus from "http-status";
 import { setAuthCookie } from "../utils/jwt";
+import { ZodError } from "zod";
 
-export const signUp = async (req: Request, res: Response, next: NextFunction) => {
+export const signUp = async (req: Request, res: Response) => {
   try {
     const { body } = await validate(SignUpValidation, req);
     const user = await createUser(body.user);
@@ -14,12 +15,14 @@ export const signUp = async (req: Request, res: Response, next: NextFunction) =>
       return res.status(httpStatus.CREATED).send({ user: user.toJSON() });
     }
   } catch (err) {
-    console.log(err);
-    next(err);
+    if (err instanceof ZodError) {
+      return res.status(httpStatus.BAD_REQUEST).send({ errors: err.errors });
+    }
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR);
   }
 };
 
-export const signIn = async (req: Request, res: Response, next: NextFunction) => {
+export const signIn = async (req: Request, res: Response) => {
   try {
     const { body } = await validate(SignUpValidation, req);
     const user = await loginUser(body.user?.email, body.user?.password);
@@ -28,7 +31,9 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
     }
     return res.status(httpStatus.NOT_FOUND).send({ message: "Invalid email or password" });
   } catch (err) {
-    console.log(err);
-    next(err);
+    if (err instanceof ZodError) {
+      return res.status(httpStatus.BAD_REQUEST).send({ errors: err.errors });
+    }
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR);
   }
 };
