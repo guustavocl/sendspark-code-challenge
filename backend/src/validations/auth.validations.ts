@@ -36,18 +36,16 @@ export const SignUpValidation = z.object({
 
 export const SignInValidation = z.object({
   body: z.object({
-    user: z.object({
-      email: z
-        .string({
-          required_error: "Email is required",
-        })
-        .toLowerCase()
-        .email("Insert a valid email"),
-      password: z
-        .string({
-          required_error: "Password is required",
-        })
-        .min(8, "Password must be at least 8 characters length"),
-    }),
+    email: z
+      .string({
+        required_error: "Email is required",
+      })
+      .toLowerCase()
+      .email("Insert a valid email"),
+    password: z
+      .string({
+        required_error: "Password is required",
+      })
+      .min(8, "Password must be at least 8 characters length"),
   }),
 });

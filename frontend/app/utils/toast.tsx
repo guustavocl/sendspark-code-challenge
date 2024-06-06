@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import toast from "react-hot-toast";
 
-export const sendRequestToast = (promise: any, message: string) => {
+export const sendRequestToast = (
+  promise: any,
+  message: string,
+  errorMessage?: string
+) => {
   toast.promise(
     promise,
     {
@@ -10,10 +14,18 @@ export const sendRequestToast = (promise: any, message: string) => {
       error: (err) => {
         return (
           <div className="flex flex-col items-center justify-center gap-2">
-            <span>Something went wrong D:</span>
-            <span>
-              {err?.code && err?.message ? `${err.code} - ${err.message}` : ""}
-            </span>
+            {errorMessage ? (
+              <span>{errorMessage}</span>
+            ) : (
+              <>
+                <span>Something went wrong D:</span>
+                <span>
+                  {err?.code && err?.message
+                    ? `${err.code} - ${err.message}`
+                    : ""}
+                </span>
+              </>
+            )}
           </div>
         );
       },

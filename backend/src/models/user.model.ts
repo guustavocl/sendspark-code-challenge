@@ -45,7 +45,7 @@ const UserSchema = new Schema(
 
 UserSchema.plugin(mongoosePaginate);
 
-UserSchema.methods.isPasswordMatch = async function (password: string) {
+UserSchema.methods.passwordMatch = async function (password: string) {
   const user = this as UserProps;
   return bcrypt.compare(password, user.password);
 };
