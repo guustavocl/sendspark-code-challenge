@@ -46,7 +46,7 @@ export default function Index() {
       <Typography variant="body1" component="div">
         You can check the API Swagger UI{" "}
         <Link
-          to="https://api.sendspark.gus.sh"
+          to="https://api.sendspark.gus.sh/swagger"
           target="_blank"
           rel="noreferrer"
           className="text-accent hover:brightness-75"

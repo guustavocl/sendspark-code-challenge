@@ -10,7 +10,7 @@ export const authenticate = () => (req: Request, res: Response, next: NextFuncti
   try {
     const payload = jwt.verify(token, JWT_SECRET);
     if (!payload) {
-      return res.status(httpStatus.UNAUTHORIZED);
+      return res.status(httpStatus.UNAUTHORIZED).send({ message: "Unauthorized" });
     }
     // Refreshing Auth token
     setAuthCookie((payload as UserProps)._id, res);
