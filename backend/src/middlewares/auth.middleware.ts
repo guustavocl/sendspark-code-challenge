@@ -12,7 +12,7 @@ export const authenticate = () => (req: Request, res: Response, next: NextFuncti
     if (!payload) {
       return res.status(httpStatus.UNAUTHORIZED);
     }
-    // Refreshing token
+    // Refreshing Auth token
     setAuthCookie((payload as UserProps)._id, res);
     next();
   } catch (err) {

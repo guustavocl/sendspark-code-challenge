@@ -1,5 +1,5 @@
+import { SignUpFormValues } from "~/hooks/useSignUp";
 import { axiosInstance } from "./axios.service";
-import { SignUpFormValues } from "~/routes/sign-up/ui/useSignUpForm";
 
 export const postSignUp = async (user: SignUpFormValues) => {
   try {

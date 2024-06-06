@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { CookieOptions, Response } from "express";
 import { JWT_SECRET } from "../api";
 import bcrypt from "bcryptjs";
+import { UserProps } from "../models/user.types";
 
 const cookieConfig = (date = new Date(1)): CookieOptions => {
   return {
@@ -13,6 +14,11 @@ const cookieConfig = (date = new Date(1)): CookieOptions => {
   };
 };
 
+export const setCookies = async (user: UserProps, res: Response) => {
+  await setAuthCookie(user._id, res);
+  await setUserCookie(user, res);
+};
+
 export const setAuthCookie = async (userId: string, res: Response) => {
   const expireDate = new Date();
   expireDate.setDate(expireDate.getDate() + 1);
@@ -22,9 +28,18 @@ export const setAuthCookie = async (userId: string, res: Response) => {
   res.cookie("auth_cookie", authToken, config);
 };
 
-export const removeAuthCookie = (res: Response) => {
+export const setUserCookie = async (user: UserProps, res: Response) => {
+  const expireDate = new Date();
+  expireDate.setDate(expireDate.getDate() + 7);
+
+  const config = cookieConfig(expireDate);
+  res.cookie("user_cookie", JSON.stringify(user), config);
+};
+
+export const removeCookies = (res: Response) => {
   const config = cookieConfig();
   res.cookie("auth_cookie", "", config);
+  res.cookie("user_cookie", "", config);
 };
 
 export const createAuthJwtToken = (userId: string) => {

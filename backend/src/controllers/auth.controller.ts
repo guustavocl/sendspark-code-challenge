@@ -3,14 +3,14 @@ import { validate } from "../utils/validate";
 import { SignUpValidation } from "../validations/auth.validations";
 import { createUser, loginUser } from "../services/auth.service";
 import httpStatus from "http-status";
-import { setAuthCookie } from "../utils/jwt";
+import { setCookies } from "../utils/jwt";
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { body } = await validate(SignUpValidation, req);
     const user = await createUser(body.user);
     if (user) {
-      await setAuthCookie(user._id, res);
+      await setCookies(user, res);
       return res.status(httpStatus.CREATED).send({ user: user.toJSON() });
     }
   } catch (err) {

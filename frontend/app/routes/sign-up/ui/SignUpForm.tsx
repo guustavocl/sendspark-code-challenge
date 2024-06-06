@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { MyInput } from "~/components/MyInput";
-import { useSignUpForm } from "./useSignUpForm";
+import { useSignUpForm } from "~/hooks/useSignUp";
 
 export default function SignUpForm({
   ...props

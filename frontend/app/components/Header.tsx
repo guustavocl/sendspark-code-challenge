@@ -1,8 +1,12 @@
 import { Button } from "@mui/material";
 import { Link, useMatches } from "@remix-run/react";
 import { Home } from "lucide-react";
+import { useUserData } from "~/contexts/UserContext";
+import { useSignOut } from "~/hooks/useSignOut";
 
 export function Header() {
+  const { loggedUser } = useUserData();
+  const { handleSignOut } = useSignOut();
   const matches = useMatches();
   const currentRoute = matches[1];
 
@@ -16,19 +20,31 @@ export function Header() {
           {(currentRoute?.handle as string) ?? ""}
         </h1>
         <div className="ml-auto flex flex-row items-center gap-4">
-          <Link to={"/sign-in"}>
-            <Button variant="text" className="text-accent">
-              Sign In
-            </Button>
-          </Link>
-          <Link to={"/sign-up"}>
+          {loggedUser ? (
             <Button
               variant="contained"
               className="bg-accent hover:bg-accent hover:brightness-75"
+              onClick={handleSignOut}
             >
-              Sign Up
+              Sign Out
             </Button>
-          </Link>
+          ) : (
+            <>
+              <Link to={"/sign-in"}>
+                <Button variant="text" className="text-accent">
+                  Sign In
+                </Button>
+              </Link>
+              <Link to={"/sign-up"}>
+                <Button
+                  variant="contained"
+                  className="bg-accent hover:bg-accent hover:brightness-75"
+                >
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

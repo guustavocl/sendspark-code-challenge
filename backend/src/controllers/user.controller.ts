@@ -4,7 +4,7 @@ import { getAllUsers, removeOneUser } from "../services/user.service";
 import { RemoveUserValidation, findAllUsersValidation } from "../validations/user.validations";
 import httpStatus from "http-status";
 import { pick } from "../utils/pick";
-import { removeAuthCookie } from "../utils/jwt";
+import { removeCookies } from "../utils/jwt";
 
 export const removeUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -33,7 +33,7 @@ export const findAllUsers = async (req: Request, res: Response, next: NextFuncti
 
 export const signOut = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await removeAuthCookie(res);
+    await removeCookies(res);
     return res.status(httpStatus.OK).send({ message: "Signed out" });
   } catch (err) {
     next(err);
