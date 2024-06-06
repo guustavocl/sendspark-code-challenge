@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 import { CookieOptions, Response } from "express";
 import { JWT_SECRET } from "../api";
 import bcrypt from "bcryptjs";
-import crypto from "crypto";
 
 const cookieConfig = (date = new Date(1)): CookieOptions => {
   return {
@@ -34,8 +33,7 @@ export const createAuthJwtToken = (userId: string) => {
   });
 };
 
-export const createHash = async () => {
-  const random = crypto.randomBytes(32).toString("hex");
-  const hash = await bcrypt.hash(random, bcrypt.genSaltSync(12));
+export const createHashedPassword = async (password: string) => {
+  const hash = await bcrypt.hash(password || "", bcrypt.genSaltSync(12));
   return hash;
 };

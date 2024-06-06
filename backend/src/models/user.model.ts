@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import mongoosePaginate from "mongoose-paginate-v2";
 import { model, models, Schema, PaginateModel } from "mongoose";
 import { UserProps } from "./user.types";
+import { createHashedPassword } from "../utils/jwt";
 
 const UserSchema = new Schema(
   {
@@ -25,6 +26,7 @@ const UserSchema = new Schema(
     password: {
       type: String,
       minLength: [8, "Password must be at least 8 characters length"],
+      required: true,
     },
   },
   {
@@ -65,5 +67,13 @@ UserSchema.path("email").validate(
   "This email is already registered!",
   "DUPLICATED"
 );
+
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+  this.password = await createHashedPassword(this.password);
+  next();
+});
 
 export const User = model<UserProps, PaginateModel<UserProps>>("User", UserSchema);
