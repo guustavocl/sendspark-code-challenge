@@ -10,5 +10,5 @@ export const errorHandler = () => (err: unknown, req: Request, res: Response, ne
   } else if (err instanceof MongooseError) {
     return res.status(httpStatus.BAD_REQUEST).send({ errors: err.message });
   }
-  return res.status(httpStatus.INTERNAL_SERVER_ERROR);
+  return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ message: "Something went wrong!" });
 };

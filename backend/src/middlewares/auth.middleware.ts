@@ -16,6 +16,6 @@ export const authenticate = () => (req: Request, res: Response, next: NextFuncti
     setAuthCookie((payload as UserProps)._id, res);
     next();
   } catch (err) {
-    return res.status(httpStatus.UNAUTHORIZED);
+    return res.status(httpStatus.UNAUTHORIZED).send({ message: "Unauthorized" });
   }
 };

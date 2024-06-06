@@ -26,7 +26,7 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
       await setCookies(user, res);
       return res.status(httpStatus.OK).send({ user: user.toJSON() });
     }
-    return res.status(httpStatus.NOT_FOUND).send({ message: "Invalid email or password" });
+    return res.status(httpStatus.BAD_REQUEST).send({ message: "Invalid email or password" });
   } catch (err) {
     next(err);
   }
