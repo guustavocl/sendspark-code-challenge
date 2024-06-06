@@ -1,6 +1,11 @@
 import { Router } from "express";
+import { AuthRoutes } from "./routes/auth.route";
+import { UserRoutes } from "./routes/user.route";
 
 const Routes = Router();
+
+Routes.use("/", AuthRoutes);
+Routes.use("/", UserRoutes);
 
 /* PING CHECK */
 Routes.get("/ping", (req, res) => {
